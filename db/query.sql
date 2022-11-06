@@ -1,3 +1,7 @@
+-- View all departments
+USE employee_db;
+SELECT * FROM department;
+
 -- View all roles table (id/title/department/salary)
 SELECT role.id, role.title, department.name AS department, salary 
 FROM role
@@ -13,13 +17,39 @@ ON role.id = employee.role_id
 LEFT JOIN departments 
 ON role.department_id = department.id
 LEFT JOIN employee manager
-ON employee.manager_id = manager.id;
+ON employee.manager_id = manager.id
+ORDER BY employee.role_id;
 
 -- Adding department (enter name of department)
+INSERT INTO department SET name = user_input;
 
 -- Adding role (enter name of role, salary, department(list))
+SELECT * FROM department;
+
+INSERT INTO role SET
+title = user_input,
+salary = user_input,
+department_id = user_choice;
 
 -- Adding employee (enter first name, last name, role(list), manager(list))
+SELECT title, id FROM role;
+
+SELECT CONCAT(manager.first_name, " ", manager.last_name) AS Manager, manager.id
+FROM employee
+LEFT JOIN employee manager
+ON employee.manager_id = manager.id
+WHERE employee.manager_id IS NOT NULL;
+
+INSERT INTO employee SET 
+first_name = user_input,
+last_name = user_input,
+role_id = user_choice,
+manager_id = user_choice;
 
 -- Updating employee role (select employee(list), select role(list))
+SELECT * FROM employee;
+SELECT * FROM role;
 
+UPDATE employee SET 
+id = user_choice,
+role_id = user_choice;
