@@ -38,15 +38,15 @@ function init() {
     }).then((answer) => {
         switch (answer.action) {
             case 'View All Departments':
-                viewDepartment();
+                viewDepartments();
                 break;
 
             case 'View All Roles':
-                viewRole();
+                viewRoles();
                 break;
             
             case 'View All Employees':
-                viewEmployee();
+                viewEmployees();
                 break;
 
             case 'Add Department':
@@ -73,7 +73,14 @@ function init() {
 };
 
 // View Department Function
-
+function viewDepartments() {
+    const sql = `SELECT * FROM department`;
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        console.table(result);
+        init();
+    });
+};
 // View Roles Function
 
 // View Employees Function
