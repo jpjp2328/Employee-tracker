@@ -21,15 +21,16 @@ ON employee.manager_id = manager.id
 ORDER BY employee.role_id;
 
 -- Adding department (enter name of department)
-INSERT INTO department SET name = user_input;
+INSERT INTO department SET 
+name:
 
 -- Adding role (enter name of role, salary, department(list))
 SELECT * FROM department;
 
 INSERT INTO role SET
-title = user_input,
-salary = user_input,
-department_id = user_choice;
+title:
+salary:
+department_id:
 
 -- Adding employee (enter first name, last name, role(list), manager(list))
 SELECT title, id FROM role;
@@ -41,10 +42,10 @@ ON employee.manager_id = manager.id
 WHERE employee.manager_id IS NOT NULL;
 
 INSERT INTO employee SET 
-first_name = user_input,
-last_name = user_input,
-role_id = user_choice,
-manager_id = user_choice;
+first_name:
+last_name:
+role_id:
+manager_id:
 
 -- Updating employee role (select employee(list), select role(list))
 SELECT * FROM employee;

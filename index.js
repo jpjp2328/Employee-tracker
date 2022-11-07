@@ -132,7 +132,52 @@ function addDepartment() {
         init();
     })
 };
+
 // Add Role Function
+function addRole() {
+    const sql = `SELECT * FROM department`;
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        inquirer.prompt([
+        {
+            name: 'title',
+            type: 'input',
+            message: 'What is the name of the role?'
+        },
+        {
+            name: 'salary',
+            type: 'input',
+            message: 'What is the salary of the role?',
+            validate: input => {
+                if (isNaN(input) === false) {
+                    return true;
+                }
+                console.log('Please enter a number.');
+            }
+        },
+        {
+            name: 'department',
+            type: 'list',
+            message: 'What department does the role belong to?',
+            choices: () =>
+            result.map((result) => result.name),
+        }
+    ]).then((answer, err) => {
+        const departmentID = result.filter((result) => result.name === answer.department)[0].id;
+        db.query(
+            `INSERT INTO role SET ?`,
+            {
+                title: answer.title,
+                salary: answer.salary,
+                department_id: departmentID
+            }
+        );
+        if (err) throw err;
+        console.log(`Added ${answer.title} to the database.`);
+        init();
+    });
+    })
+};
 
 // Add Employee Function
 
