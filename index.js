@@ -275,6 +275,5 @@ function updateEmployee () {
                 init();
             })
         })
-        
     })
 }
