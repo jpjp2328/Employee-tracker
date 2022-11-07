@@ -112,10 +112,28 @@ function viewEmployees() {
         console.table(result);
         init();
     })
-}
+};
 
 // Add Department Function
-
+function addDepartment() {
+    inquirer.prompt({
+        name: 'department',
+        type: 'input',
+        message: 'What is the name of the department?'
+    }).then((answer) => {
+        db.query(
+            `INSERT INTO department SET ?`,
+            {
+                name: answer.department
+            },
+            (err) => {
+                if (err) throw err;
+                console.log(`Added ${answer.department} to the database.`);
+                init();
+            }
+        );
+    })
+};
 // Add Role Function
 
 // Add Employee Function
