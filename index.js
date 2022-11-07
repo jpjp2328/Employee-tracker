@@ -120,18 +120,16 @@ function addDepartment() {
         name: 'department',
         type: 'input',
         message: 'What is the name of the department?'
-    }).then((answer) => {
+    }).then((answer, err) => {
         db.query(
             `INSERT INTO department SET ?`,
             {
                 name: answer.department
-            },
-            (err) => {
-                if (err) throw err;
-                console.log(`Added ${answer.department} to the database.`);
-                init();
             }
         );
+        if (err) throw err;
+        console.log(`Added ${answer.department} to the database.`);
+        init();
     })
 };
 // Add Role Function
