@@ -175,11 +175,67 @@ function addRole() {
         if (err) throw err;
         console.log(`Added ${answer.title} to the database.`);
         init();
-    });
+    })
     })
 };
 
 // Add Employee Function
+function addEmployee() {
+    const sql = `SELECT title, id FROM role`;
+    db.query(sql, (err, role_result) => {
+        if (err) throw err;
+        db.query (
+            `SELECT CONCAT(manager.first_name, " ", manager.last_name) AS manager_name, manager.id
+            FROM employee
+            LEFT JOIN employee manager
+            ON employee.manager_id = manager.id 
+            WHERE employee.manager_id IS NOT NULL`, (err, manager_result) => {
+                if (err) throw err;
+                inquirer.prompt([
+                    {
+                        name: 'first_name',
+                        type: 'input',
+                        message: "What is the employee's first name?"
+                    },
+                    {
+                        name: 'last_name',
+                        type: 'input',
+                        message: "What is the employee's last name?"
+                    },
+                    {
+                        name: 'role',
+                        type: 'list',
+                        message: "What is the employee's role?",
+                        choices: () =>
+                        role_result.map((role_result) => role_result.title),
+                    },
+                    {
+                        name: 'manager',
+                        type: 'list',
+                        message: "Who is the employee's manager?",
+                        choices: () =>
+                        manager_result.map((manager_result) => manager_result.manager_name),
+                    }
+                ]).then (function (answer, err) {
+                    const managerID = manager_result.filter((manager_result) => manager_result.manager_name === answer.manager)[0].id;
+                    const roleID = role_result.filter((role_result) => role_result.title === answer.role)[0].id;
+                    db.query(
+                        `INSERT INTO employee SET ?`,
+                        {
+                            first_name: answer.first_name,
+                            last_name: answer.last_name,
+                            role_id: roleID,
+                            manager_id: managerID
+                        }
+                    );
+                    if (err) throw err;
+                    console.log(`Added ${answer.first_name} ${answer.last_name} to the database.`);
+                    init();
+                });
+            }
+        );
+    })
+};
 
 // Update Employee Role Function
 

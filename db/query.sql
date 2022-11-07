@@ -35,7 +35,7 @@ department_id:
 -- Adding employee (enter first name, last name, role(list), manager(list))
 SELECT title, id FROM role;
 
-SELECT CONCAT(manager.first_name, " ", manager.last_name) AS Manager, manager.id
+SELECT CONCAT(manager.first_name, " ", manager.last_name) AS manager_name, manager.id
 FROM employee
 LEFT JOIN employee manager
 ON employee.manager_id = manager.id
@@ -52,5 +52,5 @@ SELECT * FROM employee;
 SELECT * FROM role;
 
 UPDATE employee SET 
-id = user_choice,
-role_id = user_choice;
+id:
+role_id:
