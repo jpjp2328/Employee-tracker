@@ -79,7 +79,7 @@ function viewDepartments() {
         if (err) throw err;
         console.table(result);
         init();
-    });
+    })
 };
 
 // View Roles Function
@@ -97,6 +97,22 @@ function viewRoles() {
 };
 
 // View Employees Function
+function viewEmployees() {
+    const sql = `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, " ", manager.last_name) AS Manager
+    FROM role
+    LEFT JOIN employee 
+    ON role.id = employee.role_id
+    LEFT JOIN department 
+    ON role.department_id = department.id
+    LEFT JOIN employee manager
+    ON employee.manager_id = manager.id
+    ORDER BY employee.role_id;`;
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        console.table(result);
+        init();
+    })
+}
 
 // Add Department Function
 
