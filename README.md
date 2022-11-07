@@ -26,6 +26,7 @@ npm i OR npm install
 ## Demo
 - Refer to this Demo Video below to guide you:
 
+https://user-images.githubusercontent.com/110818668/200314379-1503ecd0-c1d6-4397-8384-51b9e86d58b1.mp4
 
 ## Technology
 - Javascript, MySQL, node.js
